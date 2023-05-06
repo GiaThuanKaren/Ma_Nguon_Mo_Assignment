@@ -74,14 +74,25 @@ export const DeletePost = async function (idPost: string) {
   }
 }
 
-export const UpdatePost = async function (idPost: string, title: string, body: any, FileImage: any) {
+export const UpdatePost = async function (idPost: string, title: string, body: any, OldImage: string, FileImage: any = null) {
   try {
-    let result = await axios.put(`${BASE_URL_Dev}/${idPost}`,
+    let imageLink: string = OldImage;
+    if (FileImage) {
+      let formdata = new FormData()
+      formdata.append("tenfile", FileImage)
+      let resultImageUpload = await axios.post("https://instagram-backend-gia-thuan.vercel.app/api/upload/upload_single", formdata, {
+        headers: { "Content-Type": "multipart/form-data", 'Access-Control-Allow-Origin': '*' },
+      })
+      imageLink = resultImageUpload.data.data
+    }
+    let result = await axios.put(`${BASE_URL_Dev}/updateArticle/${idPost}`,
       {
-        "title": "JavaScript Frameworks - Heading into 2023",
-        "body": "The wonderful thing about glimpsing into the future is that the path is never completely clear.",
-        "cover_image": "https://res.cloudinary.com/practicaldev/image/fetch/s--y5E1X-e_--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g9ca1yzh1ujvw0blr5ys.jpg",
+        "title": title,
+        "body": body,
+        "cover_image": imageLink,
 
+      },{
+        headers: {  'Access-Control-Allow-Origin': '*' },
       })
     ShowToastify("SUCESS", "Update Sucessfully")
   } catch (error) {

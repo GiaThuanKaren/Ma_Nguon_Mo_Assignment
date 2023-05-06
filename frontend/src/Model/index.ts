@@ -8,17 +8,17 @@ export interface CreatePostModel {
 
 
 export interface PostItemInf {
-  _id: Id
-  title: string
-  published: boolean
-  body: string
-  comments_count: number
-  likes: any[]
-  bookmarks: any[]
-  created_at: CreatedAt
-  edited_at: any
-  cover_image: string
-  user: User[]
+  _id?: Id | undefined
+  title?: string
+  published?: boolean
+  body?: string
+  comments_count?: number
+  likes?: any[]
+  bookmarks?: any[]
+  created_at?: CreatedAt
+  edited_at?: any
+  cover_image?: string
+  user?: User[]
   optionAdmin?: boolean
 }
 
@@ -31,15 +31,15 @@ export interface CreatedAt {
 }
 
 export interface User {
-  _id: Id2
-  email: string
-  emailVerified: any
-  image: string
-  name: string
+  _id?: Id2
+  email?: string
+  emailVerified?: any
+  image?: string
+  name?: string
 }
 
 export interface Id2 {
-  $oid: string
+  $oid?: string
 }
 
 

@@ -9,12 +9,12 @@ import { PostItemInf } from "src/Model";
 import { useRouter } from "next/router";
 function PostItem({ optionAdmin, _id, body, bookmarks, comments_count, cover_image, created_at, edited_at, likes, published, title, user }: PostItemInf) {
   const { push } = useRouter()
-  const userAuthor = user[0];
-  console.log(_id.$oid)
+  const userAuthor = user && user[0];
+  console.log(_id?.$oid)
   return (
     <>
       <div onClick={() => {
-        push(`/detail/${_id.$oid}`)
+        push(`/detail/${_id?.$oid}`)
       }} className="my-2 w-full min-h-[100px]  border-[2px] border-[#ececec] rounded-md shadow-sm p-4">
         <div className="w-full h-[300px]">
           <LazyLoadImage
@@ -30,9 +30,9 @@ function PostItem({ optionAdmin, _id, body, bookmarks, comments_count, cover_ima
           <div className="flex items-center mt-3">
             <img
               className="w-10 h-10 rounded-full"
-              src={userAuthor.image}
+              src={userAuthor && userAuthor.image}
             />
-            <p className="mx-3 font-medium">{userAuthor.name}</p>
+            <p className="mx-3 font-medium">{userAuthor && userAuthor.name}</p>
           </div>
         </Link>
         <div className="flex justify-center w-full">
@@ -44,7 +44,7 @@ function PostItem({ optionAdmin, _id, body, bookmarks, comments_count, cover_ima
               <div className="flex items-center">
                 <div className="flex items-center">
                   <ICON icon={IconRegular.faHeart} />
-                  <p className="text-xs mx-3">{likes.length} </p>
+                  <p className="text-xs mx-3">{likes?.length} </p>
                 </div>
                 <div className="flex items-center mx-3">
                   <ICON icon={IconRegular.faComment} />
@@ -53,13 +53,13 @@ function PostItem({ optionAdmin, _id, body, bookmarks, comments_count, cover_ima
               </div>
 
               <div className="flex items-center">
-                <p className="text-xs mx-3">{readingTime(body)} min read</p>
+                <p className="text-xs mx-3">{readingTime(body as string)} min read</p>
                 <ICON icon={IconRegular.faBookmark} />
                 {
                   optionAdmin &&
                   <ICON onClick={(e) => {
                     e.stopPropagation();
-                    push(`/detail/edit/${_id.$oid}`)
+                    push(`/detail/edit/${_id?.$oid}`)
                   }} className="ml-4 p-5 hover:cursor-pointer" icon={IconSolid.faEllipsisV} />
                 }
               </div>

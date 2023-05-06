@@ -65,13 +65,13 @@ function Header() {
           <ICON className="md:hidden" icon={IconSolid.faBars} />
           <div className="flex items-center relative">
             <ICON className="md:hidden" icon={IconSolid.faSearch} />
-
+{/* 
             <Link
               href={`/new`}
               className="md:flex hidden hover:bg-blue-600 hover:text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
             >
               <p>Create Post</p>
-            </Link>
+            </Link> */}
             <ICON className="mx-3 text-xl" icon={IconRegular.faBell} />
             <img
               onClick={() => {

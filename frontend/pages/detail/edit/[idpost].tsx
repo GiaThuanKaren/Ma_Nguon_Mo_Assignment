@@ -6,36 +6,39 @@ import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Mainlayout from 'src/Layouts/Mainlayout';
 import { PostItemInf } from 'src/Model';
+import { LoadingAnimated } from 'src/components';
 import { DeletePost, GetDetailPost, UpdatePost } from 'src/service/api';
 import { ICON, IconRegular, IconSolid } from 'src/utils';
 const Editor = dynamic(() => import("src/components/Editor/index"), { ssr: false });
+interface PostEditInf extends PostItemInf {
+    filesImage?: any
 
+}
 function EditPage() {
     const [isTop, setisTop] = React.useState(false);
     const { data: session, status } = useSession()
-
+    const [loading, setLoading] = React.useState(true)
+    const InputRef = React.useRef<any>();
     const { idpost } = useRouter().query
-    const [data, setData] = React.useState<PostItemInf>()
+    const [data, setData] = React.useState<PostEditInf>({
+        filesImage: null
+    })
     const [title, setTitle] = React.useState<string>("")
     const [ImageUrl, SetImageurl] = React.useState<{
         url: string;
-        filesImage: File
-    }>();
-    const [dataEdit, setDataEdit] = React.useState<{
-        image: string;
-        title: string;
-        body: any,
-        fileImage: File
-    }>()
+        filesImage: any
+    }>({
+        url: "",
+        filesImage: null
+    });
+
     const [bodyText, setBodyText] = React.useState("")
-    console.log(idpost, "ADD")
+
 
     const HandleUpdate = async function () {
         try {
-            let result = await UpdatePost(data?._id.$oid as string, data?.title as string, data?.body, data?.cover_image)
-
+            let result = await UpdatePost(data?._id?.$oid as string, data?.title as string, data?.body, data?.cover_image as string, data?.filesImage)
         } catch (error) {
-
         }
     }
     const HandleSetData = function (key: "image" | "title" | "cover_image" | "body", value: any) {
@@ -59,6 +62,9 @@ function EditPage() {
             } catch (error) {
 
             }
+            finally {
+                setLoading(false)
+            }
         }
         let users: any = session?.user
         console.log(users?.id)
@@ -74,98 +80,124 @@ function EditPage() {
     return (
         <>
             <Mainlayout>
-                <div className='w-full h-[100px]  mb-7 flex items-center'>
-                    <div className='flex items-center'>
-                        <p
-                            className="md:flex hidden hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
+                {
+                    loading ? <LoadingAnimated /> :
+                        <>
+                            <div className='w-full h-[100px]  mb-7 flex items-center'>
+                                <div className='flex items-center'>
+                                    <p
+                                        onClick={HandleUpdate}
+                                        className="md:flex hidden hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
 
-                        >
-                            Save
-                        </p>
-                        <p
-                            onClick={() => {
-                                DeletePost(data?._id.$oid as string)
-                            }}
-                            className="mx-3 md:flex hidden hover:cursor-pointer hover:bg-red-400 bg-red-600 text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
+                                    >
+                                        Save
+                                    </p>
+                                    <p
+                                        onClick={() => {
+                                            DeletePost(data?._id?.$oid as string)
+                                        }}
+                                        className="mx-3 md:flex hidden hover:cursor-pointer hover:bg-red-400 bg-red-600 text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
 
-                        >
-                            Delete
-                        </p>
-                    </div>
-
-                </div>
-                <div className="flex min-h-screen relative ">
-                    <div className={`${isTop ? "" : "  "}` + "basis-1/12 "}>
-                        <div
-                            className={
-                                `${isTop ? "" : ""}` +
-                                "w-full flex flex-col items-center hover:cursor-pointer"
-                            }
-                        >
-                            <div className="my-4">
-                                <ICON icon={IconRegular.faHeart} />
-                                <p>20</p>
-                            </div>
-                            <div className="my-4">
-                                <ICON icon={IconRegular.faComment} />
-                                <p>20</p>
-                            </div>
-                            <div className="my-4">
-                                <ICON icon={IconRegular.faBookmark} />
-                                <p>20</p>
-                            </div>
-                            <div className="my-4">
-                                <ICON icon={IconSolid.faEllipsis} />
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className={"basis-10/12 " + `${isTop ? "" : ""}`}>
-                        {/* Image Cover */}
-                        <div className="h-52 w-full overflow-hidden mb-3 ">
-                            <LazyLoadImage
-                                // className=" "
-                                src={`https://drive.google.com/uc?id=${data?.cover_image as string}&export=download`}
-
-                            />
-                        </div>
-                        {/* Contend Page */}
-                        <div className="px-4">
-                            <div className="flex">
-                                <img
-                                    onClick={() => { }}
-                                    className="w-10 h-10 rounded-full mr-3"
-                                    src={data?.user[0].image}
-                                    alt="Rounded avatar"
-                                />
-                                <div>
-                                    <h3 className="font-medium text-base whitespace-nowrap">
-                                        {data?.user[0].name}
-                                    </h3>
-                                    <p className="text-xs">
-                                        Posted on Feb 16 • Originally published at
-                                        codebase.substack.com
+                                    >
+                                        Delete
                                     </p>
                                 </div>
+
                             </div>
-                            <input value={data?.title} onChange={(e) => {
-                                setTitle(e.target.value)
-                            }} type="text" placeholder="Default Title" className="w-full outline-none border-none font-bold text-4xl my-3" />
-                            {/* <h1 className="font-bold text-4xl my-3">
+                            <div className="flex min-h-screen relative ">
+                                <div className={`${isTop ? "" : "  "}` + "basis-1/12 "}>
+                                    <div
+                                        className={
+                                            `${isTop ? "" : ""}` +
+                                            "w-full flex flex-col items-center hover:cursor-pointer"
+                                        }
+                                    >
+                                        <div className="my-4">
+                                            <ICON icon={IconRegular.faHeart} />
+                                            <p>20</p>
+                                        </div>
+                                        <div className="my-4">
+                                            <ICON icon={IconRegular.faComment} />
+                                            <p>20</p>
+                                        </div>
+                                        <div className="my-4">
+                                            <ICON icon={IconRegular.faBookmark} />
+                                            <p>20</p>
+                                        </div>
+                                        <div className="my-4">
+                                            <ICON icon={IconSolid.faEllipsis} />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div className={"basis-10/12 " + `${isTop ? "" : ""}`}>
+                                    {/* Image Cover */}
+                                    <div className="h-52 w-full overflow-hidden mb-3 ">
+                                        <LazyLoadImage
+                                            // className=" "
+                                            src={`https://drive.google.com/uc?id=${data?.cover_image as string}&export=download`}
+
+                                        />
+
+                                    </div>
+                                    <div className='flex justify-end'>
+                                        <input ref={InputRef} type="file" name="tenfile" className='hidden' />
+                                        <p
+                                            onClick={() => {
+                                                InputRef.current.click();
+                                            }}
+                                            className="md:flex hidden hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
+
+                                        >
+                                            Choose Image
+                                        </p>
+                                    </div>
+                                    {/* Contend Page */}
+                                    <div className="px-4">
+                                        <div className="flex">
+                                            <img
+                                                onClick={() => { }}
+                                                className="w-10 h-10 rounded-full mr-3"
+                                                src={data?.user && data?.user[0].image}
+                                                alt="Rounded avatar"
+                                            />
+                                            <div>
+                                                <h3 className="font-medium text-base whitespace-nowrap">
+                                                    {data?.user && data?.user[0]?.name}
+                                                </h3>
+                                                <p className="text-xs">
+                                                    Posted on Feb 16 • Originally published at
+                                                    codebase.substack.com
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <input value={data?.title} onChange={(e) => {
+
+                                            setData({
+                                                ...data,
+                                                title: e.target.value,
+
+                                            })
+                                        }} type="text" placeholder="Default Title" className="w-full outline-none border-none font-bold text-4xl my-3" />
+                                        {/* <h1 className="font-bold text-4xl my-3">
                                 {data?.title}
                             </h1> */}
-                            <Editor onChange={(text1: any) => {
-                                setBodyText(text1)
-                                console.log("text comming", text1)
-                            }} value={bodyText} />
-                            {/* <div className="mt-5 mb-3" dangerouslySetInnerHTML={{
+                                        <Editor onChange={(text1: any) => {
+                                            setData({
+                                                ...data,
+                                                body: text1,
+                        
+                                            })
+                                            console.log("text comming", text1)
+                                        }} value={data?.body} />
+                                        {/* <div className="mt-5 mb-3" dangerouslySetInnerHTML={{
                                 __html: data?.body as string
                             }}>
 
                             </div> */}
 
-                            {/* <div className="min-h-[200px] w-full bg-ưhite rounded-xl">
+                                        {/* <div className="min-h-[200px] w-full bg-ưhite rounded-xl">
                                 <div className="flex  py-2 items-center justify-between">
                                     <div className="flex items-center">
                                         <LazyLoadImage
@@ -189,17 +221,19 @@ function EditPage() {
                                     </div>
                                 </div>
                             </div> */}
-                        </div>
-                        {/* <ListComment idPost={idpage as string} /> */}
-                        {/* <CommentInput idPost={data?._id.$oid as string} /> */}
+                                    </div>
+                                    {/* <ListComment idPost={idpage as string} /> */}
+                                    {/* <CommentInput idPost={data?._id.$oid as string} /> */}
 
 
 
-                    </div>
-                    {/* <div className={`${isTop ? "" : " "}` + "basis-2/12"}>
+                                </div>
+                                {/* <div className={`${isTop ? "" : " "}` + "basis-2/12"}>
           <p>shjdljfdl</p>
         </div> */}
-                </div>
+                            </div>
+                        </>
+                }
             </Mainlayout>
         </>
     )

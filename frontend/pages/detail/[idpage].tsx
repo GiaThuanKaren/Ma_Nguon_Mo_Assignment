@@ -82,7 +82,7 @@ function DetailPage({ paramsUrl }: Props) {
                 <LazyLoadImage
                   className="h-full w-full object-cover object-center "
                   src={`https://drive.google.com/uc?id=${data?.cover_image as string}&export=download`}
-                  
+
                 />
               </div>
               {/* Contend Page */}
@@ -91,15 +91,15 @@ function DetailPage({ paramsUrl }: Props) {
                   <img
                     onClick={() => { }}
                     className="w-10 h-10 rounded-full mr-3"
-                    src={data?.user[0].image}
+                    src={data?.user &&  data?.user[0].image}
                     alt="Rounded avatar"
                   />
                   <div>
                     <h3 className="font-medium text-base whitespace-nowrap">
-                      {data?.user[0].name}
+                      {data?.user &&  data?.user[0].name}
                     </h3>
                     <p className="text-xs">
-                      Posted on {FormatDate(data?.created_at.$date as string)} • Originally published at
+                      Posted on {FormatDate(data?.created_at?.$date as string)} • Originally published at
                       codebase.substack.com
                     </p>
                   </div>
@@ -120,12 +120,12 @@ function DetailPage({ paramsUrl }: Props) {
                       <LazyLoadImage
                         onClick={() => { }}
                         className="w-10 h-10 rounded-full mr-3"
-                        src={data?.user[0].image}
+                        src={data?.user &&  data?.user[0].image}
                         alt="Rounded avatar"
                       />
                       <div>
                         <h3 className="font-medium text-base whitespace-nowrap">
-                          {data?.user[0].name}
+                          {data?.user &&  data?.user[0].name}
                         </h3>
                         <p className="text-xs">
                           Posted on Feb 16 • Originally published at

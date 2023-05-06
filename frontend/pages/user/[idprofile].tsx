@@ -13,7 +13,7 @@ import { PostItemInf } from "src/Model/index"
 function PersonalProfile() {
     const { idprofile } = useRouter().query;
     const [loading, setLoading] = React.useState(true)
-
+    const [idUser, setIdUser] = React.useState("");
     const [dataPost, setDataPost] = React.useState<PostItemInf[]>([])
     React.useEffect(() => {
         async function FetchAPi() {
@@ -66,7 +66,7 @@ function PersonalProfile() {
                             dataPost.map((item: PostItemInf, index: number) => {
                                 return (
                                     <>
-                                        <PostItem optionAdmin={false} {...item} />
+                                        <PostItem optionAdmin={true} {...item} />
                                     </>
                                 )
                             })
