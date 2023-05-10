@@ -26,10 +26,10 @@ function Header() {
       await signOut()
       let token = localStorage.getItem("token_dev_to");
       let user = localStorage.getItem("user")
-      await Updatetoken("DELETE", JSON.parse(user as string), JSON.parse(token as string))
+      await Updatetoken("DELETE", JSON.parse(user as string), token as string)
       localStorage.removeItem("token_dev_to")
     } catch (error) {
-
+      console.log(error)
     }
   }
 
