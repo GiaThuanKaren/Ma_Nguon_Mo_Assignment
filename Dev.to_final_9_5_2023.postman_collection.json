@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "83a14266-542f-49fc-a16b-dd0c6e33c5df",
+		"name": "Dev.to",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16477535",
+		"_collection_link": "https://www.postman.com/avionics-technologist-4795326/workspace/devto/collection/21691241-83a14266-542f-49fc-a16b-dd0c6e33c5df?action=share&creator=16477535&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Article",
+			"item": [
+				{
+					"name": "Create Article",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"The Evolution of Signals in JavaScript\",\r\n    \"body\": \"There has been some buzz recently in the frontend world around the term \\\"Signals\\\". In seemingly short\",\r\n    \"cover_image\": \"https://res.cloudinary.com/practicaldev/image/fetch/s--hhnkUFvf--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/olad9yyw632rg959kewz.png\",\r\n    \"userId\": \"63ef7d4a571fc2238ed33d83\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/createArticle",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"createArticle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllArticles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getAllArticles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getAllArticles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetArticleById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getArticle/63fcd0ef5c8f9f3ca1bd3396",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getArticle",
+								"63fcd0ef5c8f9f3ca1bd3396"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Article",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"JavaScript Frameworks - Heading into 2023\",\r\n    \"body\": \"The wonderful thing about glimpsing into the future is that the path is never completely clear.\",\r\n    \"cover_image\": \"https://res.cloudinary.com/practicaldev/image/fetch/s--y5E1X-e_--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g9ca1yzh1ujvw0blr5ys.jpg\",\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/63fcd0ef5c8f9f3ca1bd3396",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"63fcd0ef5c8f9f3ca1bd3396"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Article",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/deleteArticle/63fcd1685c8f9f3ca1bd339a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"deleteArticle",
+								"63fcd1685c8f9f3ca1bd339a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like Article",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"644e14f02ddd83821951f63d\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/likeArticle/64530c5bb21ea053ed8ba49a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"likeArticle",
+								"64530c5bb21ea053ed8ba49a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlike Article",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"63ef7b21bfac48fc04433536\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/unlikeArticle/63fcd0ef5c8f9f3ca1bd3396",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unlikeArticle",
+								"63fcd0ef5c8f9f3ca1bd3396"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bookmark Article",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"63ef7b21bfac48fc04433536\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bookmarkArticle/63fcd0ef5c8f9f3ca1bd3396",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bookmarkArticle",
+								"63fcd0ef5c8f9f3ca1bd3396"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unbookmark Article",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"63ef7b21bfac48fc04433536\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/unbookmarkArticle/63fcd0ef5c8f9f3ca1bd3396",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"unbookmarkArticle",
+								"63fcd0ef5c8f9f3ca1bd3396"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllArticles From UserById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getAllArticlesFromUserById/644e14f02ddd83821951f63d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getAllArticlesFromUserById",
+								"644e14f02ddd83821951f63d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bookmark",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/getBookmark/644e14f02ddd83821951f63d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getBookmark",
+								"644e14f02ddd83821951f63d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Create comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_idPost\": \"64538860c4fa69907b9e6afe\",\r\n    \"body\": \"Uh, cảm nhận của tui cx như vậy\",\r\n    \"userId\": \"644e0d189555a3df5af9e086\",\r\n    \"_idParent\": \"6458f01b20118bb88efc579c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/createComment",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"createComment"
+							]
+						},
+						"description": "**body**\n\ntokenTopic: StartFragment\n\n```\nToken of the topic when the user Comments on that topic\n\n```\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"body\": \"Comment is updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/updateComment/63ff185d3a86a6374314ab8d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"updateComment",
+								"63ff185d3a86a6374314ab8d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/deleteComment/63ff185d3a86a6374314ab8d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"deleteComment",
+								"63ff185d3a86a6374314ab8d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllComment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_idPost\": \"63fcd0ef5c8f9f3ca1bd3396\",\r\n    \"_idParent\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/getAllComment",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getAllComment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserToken",
+			"item": [
+				{
+					"name": "Update Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Token\": \"456\",\r\n    \"UserId\": \"644e0d189555a3df5af9e086\",\r\n    \"Action\": \"REMOVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/updateToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"updateToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

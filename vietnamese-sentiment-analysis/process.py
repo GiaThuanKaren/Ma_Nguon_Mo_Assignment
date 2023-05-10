@@ -33,6 +33,11 @@ def load_boost_word(filename):
         boost_word[word.strip()] = int(score)
     return boost_word
 
+
+
+
+
+
 def boost_word_score(i, tokens):
     
     listword = []
@@ -116,7 +121,7 @@ process_dataset('input/dataset.txt', 'output/output.txt')
 
 
 
-tweet = "Bài viết hay quá , nhưng mà có những điểm còn dở "
+tweet = "Bài viết hay quá  "
 tokens = pre_process(tweet)
 pos, neg = evalue_score(tokens)
 # pos-neg 
