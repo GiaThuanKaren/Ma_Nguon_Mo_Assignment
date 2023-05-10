@@ -4,6 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { ICON, IconRegular, IconSolid } from "src/utils";
 import LeftSideBar from "../LeftSideBar";
 import { getSession, signOut, useSession } from "next-auth/react";
+import { Updatetoken } from "src/service/api";
 interface UserInf {
   image: string;
   name: string;
@@ -19,6 +20,20 @@ function Header() {
     image: "",
     name: ""
   })
+
+  const HandleSignOut = async function () {
+    try {
+      await signOut()
+      let token = localStorage.getItem("token_dev_to");
+      let user = localStorage.getItem("user")
+      await Updatetoken("DELETE", JSON.parse(user as string), JSON.parse(token as string))
+      localStorage.removeItem("token_dev_to")
+    } catch (error) {
+
+    }
+  }
+
+
   React.useEffect(() => {
     async function FetchApi() {
       try {
@@ -65,7 +80,7 @@ function Header() {
           <ICON className="md:hidden" icon={IconSolid.faBars} />
           <div className="flex items-center relative">
             <ICON className="md:hidden" icon={IconSolid.faSearch} />
-{/* 
+            {/* 
             <Link
               href={`/new`}
               className="md:flex hidden hover:bg-blue-600 hover:text-white hover:font-medium  border-[2px] border-[#D4D4D4] px-3 py-2 rounded-md items-center justify-center"
@@ -98,7 +113,7 @@ function Header() {
                 <li className="p-2">Reading List</li>
                 <li className="p-2">Settings</li>
                 <li onClick={() => {
-                  signOut()
+                  HandleSignOut()
                 }} className="p-2 border-t-[2px] border-[#D4D4D4]">
                   Sign Out
                 </li>

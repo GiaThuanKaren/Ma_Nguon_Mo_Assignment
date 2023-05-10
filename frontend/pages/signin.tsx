@@ -1,15 +1,20 @@
 import React from "react";
 import LayoutBasis1 from "src/Layouts/LayoutBasis1";
 import Mainlayout from "src/Layouts/Mainlayout";
-import { ICON, IconBrands } from "src/utils";
+import { ICON, IconBrands, ShowToastify } from "src/utils";
 import { useSession, signIn as SignIN, signOut, getSession } from "next-auth/react";
-
+import { Updatetoken } from "src/service/api";
+import useToken from "src/hook/useToken";
+import { setCookie } from 'cookies-next';
 interface ProviderProp {
   name: string;
   bgColor: string;
   Icon: JSX.Element;
 }
 function signin() {
+
+  const { tokenFCM } = useToken()
+  console.log("Token Login ", tokenFCM?.tokenFCM)
   const Provider: ProviderProp[] = [
     {
       bgColor: "bg-black",
@@ -25,20 +30,23 @@ function signin() {
   ];
   const handleOAuthSignIn = async (provider: string) => {
     localStorage.setItem("salstream_provider", provider)
+    setCookie(
+      'additionalAuthParams',
+      JSON.stringify({
+        appPublicKey: tokenFCM?.tokenFCM,
+      })
+    );
     try {
       console.log("[PROVIDER]", provider);
 
       let result = await SignIN(provider, {
         redirect: true,
         callbackUrl: "/",
-        addedParam: "My added parameter"
+      }, {
+        token_user: `${tokenFCM?.tokenFCM}`
       })
-
-      if (result?.error) {
-        // console.log(session?.user, "USER AFTER LOGIN INNNNNNNNNN"); // full account information
-
-      }
     } catch (error) {
+      ShowToastify("ERROR")
       console.log(error);
     }
   };

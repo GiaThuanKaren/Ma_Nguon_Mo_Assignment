@@ -1,5 +1,8 @@
 import axios from "axios";
+import { initializeApp } from "firebase/app";
+import { getMessaging } from "firebase/messaging";
 import { MSG, ShowToastify } from "src/utils";
+import { firebaseConfig } from "src/utils/lib/firebase";
 
 const BASE_URL_Dev: string = "http://127.0.0.1:5000/api/v1";
 const BASE_URL_PRO: string = "https://devto.onrender.com/api/v1"
@@ -11,7 +14,6 @@ export const InsertNewComment = async function (_idPost: string, body: any, _idP
       "_idPost": _idPost,
       "body": body,
       "userId": JSON.parse(userId as string),
-
       "_idParent": _idParent
     })
     ShowToastify("SUCESS", "Thanks Your Feedback")
@@ -91,9 +93,9 @@ export const UpdatePost = async function (idPost: string, title: string, body: a
         "body": body,
         "cover_image": imageLink,
 
-      },{
-        headers: {  'Access-Control-Allow-Origin': '*' },
-      })
+      }, {
+      headers: { 'Access-Control-Allow-Origin': '*' },
+    })
     ShowToastify("SUCESS", "Update Sucessfully")
   } catch (error) {
     ShowToastify("ERROR")
@@ -129,4 +131,27 @@ export const GetAllPostByIdUser = async function (id: string) {
   } catch (error) {
     ShowToastify("ERROR")
   }
-}      
+}
+
+
+export const Updatetoken = async function (Action: "INSERT" | "DELETE", useroid: string = "", token: string) {
+  console.log("Update Token Func")
+
+  try {
+    console.log(" Payload ", {
+      "Token": token,
+      "UserId": useroid,
+      "Action": Action
+    })
+    let result = await axios.post(`${BASE_URL_Dev}/updateToken`, {
+      "Token": token,
+      "UserId": useroid,
+      "Action": Action
+    })
+    console.log("Restl , ", result.data)
+    return result.data
+  } catch (error) {
+    console.log(error)
+    ShowToastify("ERROR")
+  }
+}
